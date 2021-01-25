@@ -25,4 +25,20 @@ RSpec.describe Repository, type: :model do
       expect(sub_repository.parent).to eq(main_repository)
     end
   end
+
+  describe 'scopes' do
+    describe '.main' do
+      let(:main_repositories) do
+        2.times.map { |i| create(:repository, name: "Repository #{i}") }
+      end
+
+      let(:sub_repositories) do
+        2.times.map { |i| create(:repository, name: "Repository #{i}", parent: main_repository) }
+      end
+
+      it 'returns only main repositories' do
+        expect(described_class.main).to match_array(main_repositories)
+      end
+    end
+  end
 end
