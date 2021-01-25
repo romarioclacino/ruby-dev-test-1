@@ -26,6 +26,18 @@ RSpec.describe Repository, type: :model do
     end
   end
 
+  describe 'has_many_attached files' do
+    let(:repository) { create(:repository) }
+
+    before do
+      repository.files.attach(io: File.open(Rails.root.join('spec', 'factories', 'images', 'batman.jpg')),
+                           filename: 'batman.jpg',
+                           content_type: 'image/jpg')
+    end
+
+    it { expect(repository.files).to be_an_instance_of(ActiveStorage::Attached::Many) }
+  end
+
   describe 'scopes' do
     describe '.main' do
       let(:main_repositories) do
