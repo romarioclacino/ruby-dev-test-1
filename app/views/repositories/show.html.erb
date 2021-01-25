@@ -1,0 +1,20 @@
+
+<p id="notice"><%= notice %></p>
+ 
+<h3><%= @repository.name %></h3>
+ 
+<%= link_to 'Edit', edit_repository_path(@repository) %> |
+<%= link_to 'Back', repositories_path %> |
+<%= link_to 'Upload Files', new_repository_file_upload_path(@repository) %> |
+<%= link_to 'New Repository', new_repository_path(parent_id: @repository.id) %>
+ 
+<h5>Files</h5>
+ 
+<ul>
+<% @repository.children.each do |sub_repository| %>
+    <li><%= link_to sub_repository.name, sub_repository %></li>
+ <% end %>
+ <% @repository.files.each do |file| %>
+    <li><%= link_to file.filename, url_for(file) %></li>
+ <% end %>
+</ul>
